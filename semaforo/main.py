@@ -2,9 +2,9 @@ import argparse
 import signal
 import threading
 
-import gpio_modulo as gpio
-from modelo1 import Modelo1
-from modelo2 import Modelo2
+from semaforo.gpio import modulo as gpio
+from semaforo.modelos.modelo1 import Modelo1
+from semaforo.modelos.modelo2 import Modelo2
 
 
 def main():

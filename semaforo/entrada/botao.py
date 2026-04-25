@@ -1,7 +1,7 @@
 import threading
 import time
 
-import gpio_modulo as gpio
+from semaforo.gpio import modulo as gpio
 
 
 class Botao:

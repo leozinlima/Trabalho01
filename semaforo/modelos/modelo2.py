@@ -1,8 +1,8 @@
 import threading
 import time
 
-import gpio_modulo as gpio
-from botao import Botao
+from semaforo.gpio import modulo as gpio
+from semaforo.entrada.botao import Botao
 
 BIT0 = 24
 BIT1 = 8

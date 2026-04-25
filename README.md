@@ -25,11 +25,20 @@ de debounce e log imediato no terminal.
 .
 ├── README.md
 ├── requirements.txt
-├── main.py           # ponto de entrada + CLI
-├── gpio_modulo.py    # modulo GPIO (entrada/saida, interrupcao, PWM)
-├── botao.py          # botao com debounce
-├── modelo1.py        # semaforo de 3 LEDs
-└── modelo2.py        # cruzamento em 3 bits
+└── semaforo/                   # pacote principal
+    ├── __init__.py
+    ├── __main__.py             # permite: python -m semaforo
+    ├── main.py                 # ponto de entrada + CLI
+    ├── gpio/                   # pacote — modulo GPIO
+    │   ├── __init__.py
+    │   └── modulo.py           # entrada/saida, interrupcao, PWM
+    ├── entrada/                # pacote — entradas
+    │   ├── __init__.py
+    │   └── botao.py            # botao com debounce
+    └── modelos/                # pacote — maquinas de estado
+        ├── __init__.py
+        ├── modelo1.py          # semaforo de 3 LEDs
+        └── modelo2.py          # cruzamento em 3 bits
 ```
 
 ## Pinos (numeracao BCM)
@@ -113,14 +122,21 @@ acesso a GPIO.
 
 ```bash
 # Ambos os modelos (padrao)
-python main.py
+python -m semaforo
 
 # Apenas o Modelo 1
-python main.py --modo modelo1
+python -m semaforo --modo modelo1
 
 # Apenas o Modelo 2
-python main.py --modo modelo2
+python -m semaforo --modo modelo2
 ```
 
 Use **Ctrl+C** para encerrar. O sistema para as threads, libera as
-interrupcoes dos botoes, desliga as saidas e chama `GPIO.cleanup()`.
+interrupcoes dos botoes e desliga todas as saidas em LOW.
+
+> **Atencao:** o codigo **nao** chama `GPIO.cleanup()` no encerramento.
+> `cleanup()` reverte todos os pinos para `INPUT` em alta impedancia,
+> deixando-os flutuantes. Isso faz o Dashboard do ThingsBoard "piscar"
+> porque ele passa a ler valores aleatorios das GPIOs. Em vez disso,
+> as saidas sao desligadas explicitamente em LOW pelos `parar()` de cada
+> modelo, e as entradas seguem com `pull-down` configurado.

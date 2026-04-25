@@ -1,0 +1,15 @@
+from semaforo.gpio.modulo import (
+    alterar_duty_pwm,
+    alterar_frequencia_pwm,
+    configurar_entrada,
+    configurar_saida,
+    desligar,
+    escrever,
+    iniciar_pwm,
+    ler,
+    ligar,
+    limpar,
+    parar_pwm,
+    registrar_interrupcao,
+    remover_interrupcao,
+)

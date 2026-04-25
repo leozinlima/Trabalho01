@@ -77,4 +77,3 @@ def parar_pwm(pino):
 def limpar():
     for pino in list(_pwms.keys()):
         parar_pwm(pino)
-    GPIO.cleanup()
